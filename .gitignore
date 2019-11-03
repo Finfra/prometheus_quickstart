@@ -1,0 +1,10 @@
+.vagrant/*
+.vagrant
+*.tar.gz
+*.retry
+*.log
+
+forVm/*
+!forVm/.ThisFolderIsIgnoredByGit
+
+.DS_Store
