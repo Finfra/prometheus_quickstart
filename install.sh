@@ -55,7 +55,11 @@ systemctl daemon-reload
 systemctl enable prometheus
 systemctl start prometheus
 
-# for Source Code
+# Install package
 apt update -y
-apt install -y git-core
-git clone https://github.com/in4it/prometheus-course.git /vagrant/forVm/prometheus-course
+apt install -y git-core tree python3-pip
+
+# for Source Code
+pip3 install flask
+git clone https://github.com/Finfra/prometheus-course.git /vagrant/forVm/prometheus-course
+git clone https://github.com/prometheus/client_python /vagrant/forVm/client_python
