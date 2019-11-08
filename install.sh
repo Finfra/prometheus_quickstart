@@ -1,65 +1,79 @@
 #!/bin/bash
-PROMETHEUS_VERSION="2.2.1"
-wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
-tar -xzvf prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
-cd prometheus-${PROMETHEUS_VERSION}.linux-amd64/
-# if you just want to start prometheus as root
-#./prometheus --config.file=prometheus.yml
 
-# create user
-useradd --no-create-home --shell /bin/false prometheus 
+# Nameserver Setting
+echo "nameserver 8.8.8.8">>/etc/resolv.conf
 
-# create directories
-mkdir -p /etc/prometheus
-mkdir -p /var/lib/prometheus
-
-# set ownership
-chown prometheus:prometheus /etc/prometheus
-chown prometheus:prometheus /var/lib/prometheus
-
-# copy binaries
-cp prometheus /usr/local/bin/
-cp promtool /usr/local/bin/
-
-chown prometheus:prometheus /usr/local/bin/prometheus
-chown prometheus:prometheus /usr/local/bin/promtool
-
-# copy config
-cp -r consoles /etc/prometheus
-cp -r console_libraries /etc/prometheus
-cp prometheus.yml /etc/prometheus/prometheus.yml
-
-chown -R prometheus:prometheus /etc/prometheus/consoles
-chown -R prometheus:prometheus /etc/prometheus/console_libraries
-
-# setup systemd
-echo '[Unit]
-Description=Prometheus
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-User=prometheus
-Group=prometheus
-Type=simple
-ExecStart=/usr/local/bin/prometheus \
-    --config.file /etc/prometheus/prometheus.yml \
-    --storage.tsdb.path /var/lib/prometheus/ \
-    --web.console.templates=/etc/prometheus/consoles \
-    --web.console.libraries=/etc/prometheus/console_libraries
-
-[Install]
-WantedBy=multi-user.target' > /etc/systemd/system/prometheus.service
-
-systemctl daemon-reload
-systemctl enable prometheus
-systemctl start prometheus
 
 # Install package
-apt update -y
-apt install -y git-core tree python3-pip
+apt-get update -y
+sleep 5
+apt-get install -y git-core tree python3-pip 
+# apt install -y wget systemd
+sleep 5
+if [[ $1 -eq 1 ]]; then
+    # Prometheus Download
+    PROMETHEUS_VERSION="2.13.1"
+    cd /vagrant/forVm/
+    [ ! -f prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz ] && wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
+    tar -xzvf prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
+    cd prometheus-${PROMETHEUS_VERSION}.linux-amd64/
+    # if you just want to start prometheus as root
+    #./prometheus --config.file=prometheus.yml
 
-# for Source Code
-pip3 install flask
-git clone https://github.com/Finfra/prometheus-course.git /vagrant/forVm/prometheus-course
-git clone https://github.com/prometheus/client_python /vagrant/forVm/client_python
+    # create user
+    useradd --no-create-home --shell /bin/false prometheus 
+
+    # create directories
+    mkdir -p /etc/prometheus
+    mkdir -p /var/lib/prometheus
+
+    # set ownership
+    chown prometheus:prometheus /etc/prometheus
+    chown prometheus:prometheus /var/lib/prometheus
+
+    # copy binaries
+    cp prometheus /usr/local/bin/
+    cp promtool /usr/local/bin/
+
+    chown prometheus:prometheus /usr/local/bin/prometheus
+    chown prometheus:prometheus /usr/local/bin/promtool
+
+    # copy config
+    cp -r consoles /etc/prometheus
+    cp -r console_libraries /etc/prometheus
+    cp prometheus.yml /etc/prometheus/prometheus.yml
+
+    chown -R prometheus:prometheus /etc/prometheus/consoles
+    chown -R prometheus:prometheus /etc/prometheus/console_libraries
+
+    # setup systemd
+    echo '[Unit]
+    Description=Prometheus
+    Wants=network-online.target
+    After=network-online.target
+
+    [Service]
+    User=prometheus
+    Group=prometheus
+    Type=simple
+    ExecStart=/usr/local/bin/prometheus \
+        --config.file /etc/prometheus/prometheus.yml \
+        --storage.tsdb.path /var/lib/prometheus/ \
+        --web.console.templates=/etc/prometheus/consoles \
+        --web.console.libraries=/etc/prometheus/console_libraries
+
+    [Install]
+    WantedBy=multi-user.target' > /etc/systemd/system/prometheus.service
+
+    systemctl daemon-reload
+    systemctl enable prometheus
+    systemctl start prometheus
+
+
+    # for Source Code
+    pip3 install flask
+    [ ! -d /vagrant/forVm/prometheus-course ] && git clone https://github.com/Finfra/prometheus-course.git /vagrant/forVm/prometheus-course
+    [ ! -d /vagrant/forVm/client_python ] && git clone https://github.com/prometheus/client_python /vagrant/forVm/client_python
+fi 
+
+echo "p$1 vm is intstalled................................"

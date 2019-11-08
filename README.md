@@ -5,6 +5,9 @@
 # Usage
 1. install
 ```
+vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-librarian-chef-nochef
+
 git clone https://github.com/finfra/prometheus_quickstart.git
 cd prometheus_quickstart
 vagrant destroy -f ;vagrant up;vagrant ssh
