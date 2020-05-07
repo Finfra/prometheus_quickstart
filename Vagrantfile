@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
   # #config.vm.synced_folder ".", "/vagrant", type: "rsync"
   # config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
   #
-  $num_instances = 2
+  $num_instances = 1
   (1..$num_instances).each do |i|
     config.vm.define "p#{i}" do |node|
       #node.vm.box = "lasp/ubuntu18.04"

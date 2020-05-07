@@ -5,13 +5,16 @@ echo "nameserver 8.8.8.8">>/etc/resolv.conf
 
 
 # Install package
-apt -y update && apt -y upgrade
-apt -y install tree
-locale-gen ko_KR.UTF-8
 export LC_ALL=C.UTF-8
 export DEBIAN_FRONTEND=noninteractive
 echo "export LC_ALL=C.UTF-8">>/etc/bash.bashrc
 echo "export DEBIAN_FRONTEND=noninteractive">>/etc/bash.bashrc
+locale-gen ko_KR.UTF-8
+
+apt -y update && apt -y upgrade
+apt -y install tree
+apt -y install software-properties-common
+add-apt-repository -y ppa:deadsnakes/ppa
 
 sleep 5
 apt -y install python3.8
