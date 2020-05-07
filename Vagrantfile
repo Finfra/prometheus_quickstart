@@ -18,7 +18,8 @@ Vagrant.configure("2") do |config|
       #node.vm.box = "lasp/ubuntu18.04"
       #node.vm.box = "bento/ubuntu-18.04"
       #node.vm.box = "generic/ubuntu1804"
-      node.vm.box = "ubuntu/xenial64"
+      #node.vm.box = "ubuntu/xenial64"
+      node.vm.box = "generic/ubuntu1804"
       node.vm.hostname = "p#{i}"
       ip = "#{SUBNET}.#{i+99}"
       node.vm.network "private_network", ip: ip

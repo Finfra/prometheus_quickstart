@@ -14,8 +14,8 @@ echo "export LC_ALL=C.UTF-8">>/etc/bash.bashrc
 echo "export DEBIAN_FRONTEND=noninteractive">>/etc/bash.bashrc
 
 sleep 5
-apt -y install git-core tree python3-pip
 apt -y install python3.8
+apt -y install git-core tree python3-pip
 apt -y install python3-pip
 python3.8 -m pip install --user --upgrade pip
 
