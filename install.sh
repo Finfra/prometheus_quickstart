@@ -14,13 +14,17 @@ echo "export LC_ALL=C.UTF-8">>/etc/bash.bashrc
 echo "export DEBIAN_FRONTEND=noninteractive">>/etc/bash.bashrc
 
 sleep 5
-apt-get install -y git-core tree python3-pip
+apt -y install git-core tree python3-pip
+apt -y install python3.8
+apt -y install python3-pip
+python3.8 -m pip install --user --upgrade pip
+
 # apt install -y wget systemd
 sleep 5
 if [[ $1 -eq 1 ]]; then
     # Prometheus Download
-    PROMETHEUS_VERSION="2.13.1"
-    #PROMETHEUS_VERSION="2.18.0"
+    #PROMETHEUS_VERSION="2.13.1"
+    PROMETHEUS_VERSION="2.18.0"
     cd /vagrant/forVm/
     [ ! -f prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz ] && wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
     tar -xzvf prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
@@ -79,7 +83,8 @@ WantedBy=multi-user.target' > /etc/systemd/system/prometheus.service
 
 
     # for Source Code
-    pip3 install flask
+    python3.8 -m pip install --upgrade pip
+    python3.8 -m pip install flask
     [ ! -d /vagrant/forVm/prometheus-course ] && git clone https://github.com/Finfra/prometheus-course.git /vagrant/forVm/prometheus-course
     [ ! -d /vagrant/forVm/client_python ] && git clone https://github.com/prometheus/client_python /vagrant/forVm/client_python
 fi
