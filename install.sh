@@ -5,14 +5,22 @@ echo "nameserver 8.8.8.8">>/etc/resolv.conf
 
 
 # Install package
-apt-get update -y
+apt -y update && apt -y upgrade
+apt -y install tree
+locale-gen ko_KR.UTF-8
+export LC_ALL=C.UTF-8
+export DEBIAN_FRONTEND=noninteractive
+echo "export LC_ALL=C.UTF-8">>/etc/bash.bashrc
+echo "export DEBIAN_FRONTEND=noninteractive">>/etc/bash.bashrc
+
 sleep 5
-apt-get install -y git-core tree python3-pip 
+apt-get install -y git-core tree python3-pip
 # apt install -y wget systemd
 sleep 5
 if [[ $1 -eq 1 ]]; then
     # Prometheus Download
     PROMETHEUS_VERSION="2.13.1"
+    #PROMETHEUS_VERSION="2.18.0"
     cd /vagrant/forVm/
     [ ! -f prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz ] && wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
     tar -xzvf prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
@@ -21,7 +29,7 @@ if [[ $1 -eq 1 ]]; then
     #./prometheus --config.file=prometheus.yml
 
     # create user
-    useradd --no-create-home --shell /bin/false prometheus 
+    useradd --no-create-home --shell /bin/false prometheus
 
     # create directories
     mkdir -p /etc/prometheus
@@ -48,22 +56,22 @@ if [[ $1 -eq 1 ]]; then
 
     # setup systemd
     echo '[Unit]
-    Description=Prometheus
-    Wants=network-online.target
-    After=network-online.target
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
 
-    [Service]
-    User=prometheus
-    Group=prometheus
-    Type=simple
-    ExecStart=/usr/local/bin/prometheus \
-        --config.file /etc/prometheus/prometheus.yml \
-        --storage.tsdb.path /var/lib/prometheus/ \
-        --web.console.templates=/etc/prometheus/consoles \
-        --web.console.libraries=/etc/prometheus/console_libraries
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus \
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries
 
-    [Install]
-    WantedBy=multi-user.target' > /etc/systemd/system/prometheus.service
+[Install]
+WantedBy=multi-user.target' > /etc/systemd/system/prometheus.service
 
     systemctl daemon-reload
     systemctl enable prometheus
@@ -74,6 +82,6 @@ if [[ $1 -eq 1 ]]; then
     pip3 install flask
     [ ! -d /vagrant/forVm/prometheus-course ] && git clone https://github.com/Finfra/prometheus-course.git /vagrant/forVm/prometheus-course
     [ ! -d /vagrant/forVm/client_python ] && git clone https://github.com/prometheus/client_python /vagrant/forVm/client_python
-fi 
+fi
 
 echo "p$1 vm is intstalled................................"
