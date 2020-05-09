@@ -26,8 +26,7 @@ python3.8 -m pip install --user --upgrade pip
 sleep 5
 if [[ $1 -eq 1 ]]; then
     # Prometheus Download
-    #PROMETHEUS_VERSION="2.13.1"
-    PROMETHEUS_VERSION="2.18.0"
+    PROMETHEUS_VERSION="2.13.1"
     cd /vagrant/forVm/
     [ ! -f prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz ] && wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
     tar -xzvf prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
