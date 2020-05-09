@@ -8,6 +8,8 @@
 vagrant plugin install vagrant-vbguest
 vagrant plugin install vagrant-librarian-chef-nochef
 
+git config --global core.autocrlf false
+git config --global core.eol lf
 git clone https://github.com/finfra/prometheus_quickstart.git
 cd prometheus_quickstart
 vagrant destroy -f ;vagrant up;vagrant status
