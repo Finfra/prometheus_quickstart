@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
           vb.cpus = 1
           vb.memory = "2048"
       end
-      node.vm.provision "shell", path: "install.sh", args:[1]
+      # node.vm.provision "shell", path: "install.sh", args:[1]
     end
   end
 
@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
           vb.cpus = 1
           vb.memory = "2048"
       end
-      node.vm.provision "shell", path: "install.sh", args:[#{i+1}]
+      node.vm.provision "shell", path: "install.sh", args:["#{i+1}"]
     end
   end
 
