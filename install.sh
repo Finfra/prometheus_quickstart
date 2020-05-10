@@ -20,7 +20,10 @@ sleep 5
 apt -y install python3.8
 apt -y install git-core tree python3-pip
 apt -y install python3-pip
-python3.8 -m pip install --user --upgrade pip
+ln -s /usr/bin/python3.8 /usr/bin/python
+ln -s /usr/bin/python3.8 /usr/bin/python3
+ln -s /usr/bin/pip3 /usr/bin/pip
+python3 -m pip install --user --upgrade pip
 
 # apt install -y wget systemd
 sleep 5
@@ -100,7 +103,7 @@ fi
 # Servers to be monitored
 if [[ $1 -gt 1 ]]; then
     echo "s$1 vm is intstalling..............................."
-    python3.8 -m pip install prometheus_client
+    python3 -m pip install prometheus_client
     echo "s$1 vm is intstalled................................"
 fi
 
@@ -108,6 +111,13 @@ fi
 # Grafana node
 if [[ $1 -eq 3 ]]; then
     echo "s$1(Grafana node) vm is intstalling..............................."
+    echo 'deb https://packages.grafana.com/oss/deb stable main' >> /etc/apt/sources.list
+    curl https://packages.grafana.com/gpg.key | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get -y install grafana
 
+    systemctl daemon-reload
+    systemctl start grafana-server
+    systemctl enable grafana-server.service
     echo "s$1(Grafana node) vm is intstalled................................"
 fi
