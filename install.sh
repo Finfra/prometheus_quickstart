@@ -16,15 +16,12 @@ apt -y install tree
 apt -y install git-core tree
 
 apt -y install software-properties-common
+
 add-apt-repository -y ppa:deadsnakes/ppa
 sleep 5
-apt -y install python3.8
-wget https://bootstrap.pypa.io/get-pip.py -O /vagrant/forVm/get-pip.py
-python3.8 /vagrant/forVm/get-pip.py
+apt -y install python3
+apt -y install python3-pip
 
-rm /usr/bin/pip
-ln -s /usr/bin/python3.8 /usr/bin/python
-ln -s /usr/bin/python3.8 /usr/bin/python3
 
 python3 -m pip install --user --upgrade pip
 
