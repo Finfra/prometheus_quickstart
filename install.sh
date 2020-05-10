@@ -24,7 +24,10 @@ python3.8 -m pip install --user --upgrade pip
 
 # apt install -y wget systemd
 sleep 5
+
+# Prometheus node
 if [[ $1 -eq 1 ]]; then
+    echo "p$1 vm is intstalling..............................."
     # Prometheus Download
     #PROMETHEUS_VERSION="2.13.1"
     PROMETHEUS_VERSION="2.18.0"
@@ -90,6 +93,21 @@ WantedBy=multi-user.target' > /etc/systemd/system/prometheus.service
     python3.8 -m pip install flask
     [ ! -d /vagrant/forVm/prometheus-course ] && git clone https://github.com/Finfra/prometheus-course.git /vagrant/forVm/prometheus-course
     [ ! -d /vagrant/forVm/client_python ] && git clone https://github.com/prometheus/client_python /vagrant/forVm/client_python
+    echo "p$1 vm is intstalled................................"
 fi
 
-echo "p$1 vm is intstalled................................"
+
+# Servers to be monitored
+if [[ $1 -gt 1 ]]; then
+    echo "s$1 vm is intstalling..............................."
+    python3.8 -m pip install prometheus_client
+    echo "s$1 vm is intstalled................................"
+fi
+
+
+# Grafana node
+if [[ $1 -eq 3 ]]; then
+    echo "s$1(Grafana node) vm is intstalling..............................."
+
+    echo "s$1(Grafana node) vm is intstalled................................"
+fi
