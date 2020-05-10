@@ -16,7 +16,7 @@ vagrant destroy -f ;vagrant up;vagrant status
 ```
 2. test
 ```
-open http://172.17.8.100:9090
+open http://172.17.8.5:9090
 scrape_samples_scraped → Execute → graph
 ```
 
