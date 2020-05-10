@@ -92,8 +92,8 @@ WantedBy=multi-user.target' > /etc/systemd/system/prometheus.service
 
 
     # for Source Code
-    python3.8 -m pip install --upgrade pip
-    python3.8 -m pip install flask
+    python3 -m pip install --upgrade pip
+    python3 -m pip install flask
     [ ! -d /vagrant/forVm/prometheus-course ] && git clone https://github.com/Finfra/prometheus-course.git /vagrant/forVm/prometheus-course
     [ ! -d /vagrant/forVm/client_python ] && git clone https://github.com/prometheus/client_python /vagrant/forVm/client_python
     echo "p$1 vm is intstalled................................"
