@@ -21,6 +21,8 @@ vagrant ssh s1 -c'touch /vagrant'
 vagrant ssh s1 -c'touch /vagrant/VagrantShareFolderOK'
 ls |grep VagrantShareFolderOK
 rm VagrantShareFolderOK
+
+vagrant ssh s1 -c'python3 -c "import prometheus_client;print(prometheus_client.__name__)"'
 echo ---------------------------------------------------------------------------
 
 echo -s2----vagrant share folder check------------------------------------------
