@@ -10,10 +10,10 @@ Vagrant.configure("2") do |config|
   #
   # # nowage Changed
   # #config.vm.synced_folder ".", "/vagrant", type: "rsync"
-  # config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
+  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
   #
-  $num_instances = 1
-  (1..$num_instances).each do |i|
+  $num_prometheus_instances = 1
+  (1..$num_prometheus_instances).each do |i|
     config.vm.define "p#{i}" do |node|
       #node.vm.box = "lasp/ubuntu18.04"
       #node.vm.box = "bento/ubuntu-18.04"
@@ -21,14 +21,31 @@ Vagrant.configure("2") do |config|
       #node.vm.box = "ubuntu/xenial64"
       node.vm.box = "generic/ubuntu1804"
       node.vm.hostname = "p#{i}"
-      ip = "#{SUBNET}.#{i+99}"
+      ip = "#{SUBNET}.#{i+4}"
       node.vm.network "private_network", ip: ip
       node.vm.provider "virtualbox" do |vb|
           vb.name="p#{i}"
           vb.cpus = 1
           vb.memory = "2048"
       end
-      node.vm.provision "shell", path: "install.sh", args:[i]
+  #    node.vm.provision "shell", path: "install.sh", args:[1]
     end
   end
+
+  $num_node_instances = 2
+  (1..$num_node_instances).each do |i|
+    config.vm.define "s#{i}" do |node|
+      node.vm.box = "generic/ubuntu1804"
+      node.vm.hostname = "s#{i}"
+      ip = "#{SUBNET}.#{i+10}"
+      node.vm.network "private_network", ip: ip
+      node.vm.provider "virtualbox" do |vb|
+          vb.name="s#{i}"
+          vb.cpus = 1
+          vb.memory = "2048"
+      end
+  #    node.vm.provision "shell", path: "install.sh", args:[2]
+    end
+  end
+
 end
