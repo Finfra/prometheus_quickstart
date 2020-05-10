@@ -25,7 +25,7 @@ rm VagrantShareFolderOK
 vagrant ssh s1 -c'python3 -c "import prometheus_client;print(prometheus_client.__name__)"'
 echo ---------------------------------------------------------------------------
 
-echo -s2----vagrant share folder check------------------------------------------
+echo -s2----Grafana check------------------------------------------
 vagrant ssh s2 -c'systemctl  --no-pager status grafana-server'
 curl http://172.17.8.12:3000|head -n 3
 x=$(which open)
