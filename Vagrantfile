@@ -16,10 +16,10 @@ Vagrant.configure("2") do |config|
   (1..$num_prometheus_instances).each do |i|
     config.vm.define "p#{i}" do |node|
       #node.vm.box = "lasp/ubuntu18.04"
-      #node.vm.box = "bento/ubuntu-18.04"
+      node.vm.box = "bento/ubuntu-18.04"
       #node.vm.box = "generic/ubuntu1804"
       #node.vm.box = "ubuntu/xenial64"
-      node.vm.box = "generic/ubuntu1804"
+      #node.vm.box = "generic/ubuntu1804"
       node.vm.hostname = "p#{i}"
       ip = "#{SUBNET}.#{i+4}"
       node.vm.network "private_network", ip: ip
@@ -35,7 +35,8 @@ Vagrant.configure("2") do |config|
   $num_node_instances = 2
   (1..$num_node_instances).each do |i|
     config.vm.define "s#{i}" do |node|
-      node.vm.box = "generic/ubuntu1804"
+      #node.vm.box = "generic/ubuntu1804"
+      node.vm.box = "bento/ubuntu-18.04"
       node.vm.hostname = "s#{i}"
       ip = "#{SUBNET}.#{i+10}"
       node.vm.network "private_network", ip: ip
