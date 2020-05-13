@@ -9,16 +9,13 @@ Vagrant.configure("2") do |config|
   # end
   #
   # # nowage Changed
-  # #config.vm.synced_folder ".", "/vagrant", type: "rsync"
-  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
+  # config.vm.synced_folder ".", "/vagrant", type: "rsync"
+  # config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
   #
   $num_prometheus_instances = 1
   (1..$num_prometheus_instances).each do |i|
     config.vm.define "p#{i}" do |node|
-      #node.vm.box = "lasp/ubuntu18.04"
       node.vm.box = "bento/ubuntu-18.04"
-      #node.vm.box = "generic/ubuntu1804"
-      #node.vm.box = "ubuntu/xenial64"
       #node.vm.box = "generic/ubuntu1804"
       node.vm.hostname = "p#{i}"
       ip = "#{SUBNET}.#{i+4}"
