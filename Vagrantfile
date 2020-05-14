@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   #
   # # nowage Changed
   # config.vm.synced_folder ".", "/vagrant", type: "rsync"
-  # config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
+  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
   #
   $num_prometheus_instances = 1
   (1..$num_prometheus_instances).each do |i|
