@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   #
   # # nowage Changed
   # config.vm.synced_folder ".", "/vagrant", type: "rsync"
-  config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
+  #config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_udp: false
   #
   $num_prometheus_instances = 1
   (1..$num_prometheus_instances).each do |i|
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
           vb.memory = "2048"
       end
       node.vm.provision "shell", path: "install.sh", args:["#{i+1}"]
-      node.vm.provision "shell", path: "./script/setHosts.sh", args: "#{SUBNET}"
+      node.vm.provision "shell", path: "setHosts.sh", args: "#{SUBNET}"
 
     end
   end
