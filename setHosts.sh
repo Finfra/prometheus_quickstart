@@ -10,10 +10,10 @@ $SUBNET.11   s1
 $SUBNET.12   s2
 ">> /etc/hosts
 
-# echo "
-# nameserver 168.126.63.1
-# nameserver 8.8.8.8
-# ">> /etc/resolv.conf
+echo "
+nameserver 168.126.63.1
+nameserver 8.8.8.8
+">> /etc/resolv.conf
 
 
 echo --------------------------------------------------------------------------------
