@@ -43,6 +43,8 @@ Vagrant.configure("2") do |config|
           vb.memory = "2048"
       end
       node.vm.provision "shell", path: "install.sh", args:["#{i+1}"]
+      node.vm.provision "shell", path: "./script/setHosts.sh", args: "#{SUBNET}"
+
     end
   end
 

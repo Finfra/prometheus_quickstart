@@ -7,6 +7,7 @@
 ```
 vagrant plugin install vagrant-vbguest
 vagrant plugin install vagrant-librarian-chef-nochef
+vagrant plugin install vagrant-winnfsd
 
 git config --global core.autocrlf false
 git config --global core.eol lf
